@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>    
+  <let name="pointcloud_topics" value="[/sensing/lidar/top/pointcloud_raw_ex]"/>
+
+  <arg name="camera_name" default="camera0"/>
+
+  <let name="common_frame_id" value="base_link"/>
+
+  <node pkg="sensor_sync_optimizer" exec="sensor_sync_optimizer_node"
+        name="sensor_sync_optimizer_node" output="screen">
+    <param name="pointcloud_topics" value="$(var pointcloud_topics)"/>
+    <param name="common_frame_id" value="$(var common_frame_id)"/>
+    <param name="optimization_modality" value="camera"/>
+
+    <remap from="image" to="/sensing/camera/$(var camera_name)/image_rect_color/compressed"/>
+    <remap from="camera_info" to="/sensing/camera/$(var camera_name)/camera_info"/>
+  </node>
+
+</launch>

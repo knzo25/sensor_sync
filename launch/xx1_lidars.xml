@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>    
+  <let name="pointcloud_topics" value="[
+    /sensing/lidar/top/pointcloud_raw_ex,
+    /sensing/lidar/left/pointcloud_raw_ex,
+    /sensing/lidar/right/pointcloud_raw_ex
+  ]"/>
+
+  <let name="common_frame_id" value="base_link"/>
+
+  <node pkg="sensor_sync_optimizer" exec="sensor_sync_optimizer_node"
+        name="sensor_sync_optimizer_node" output="screen">
+    <param name="pointcloud_topics" value="$(var pointcloud_topics)"/>
+    <param name="common_frame_id" value="$(var common_frame_id)"/>
+    <param name="optimization_modality" value="lidar"/>
+  </node>
+
+</launch>
